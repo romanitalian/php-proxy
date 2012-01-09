@@ -45,8 +45,15 @@ curl_setopt ($curlSession, CURLOPT_HEADER, 1);
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	curl_setopt ($curlSession, CURLOPT_POST, 1);
-	curl_setopt ($curlSession, CURLOPT_POSTFIELDS, $_POST);
+        $postinfo = '';
+        foreach($_POST as $key=>$value) {
+                $postinfo .= $key.'='.urlencode($value).'&';
+        }
+        rtrim($postinfo,'&');
+
+
+        curl_setopt ($curlSession, CURLOPT_POST, 1);
+        curl_setopt ($curlSession, CURLOPT_POSTFIELDS, $postinfo);
 }
 
 curl_setopt($curlSession, CURLOPT_RETURNTRANSFER,1);
